@@ -1,73 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule Builder</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Schedule Builder</h1>
-        <form id="scheduleForm">
-            <div class="form-group">
-                <label for="userId">User ID *</label>
-                <input type="text" id="userId" required> <!-- User ID Field -->
-            </div>
-
-            <div class="form-group">
-                <label for="title">Title *</label>
-                <input type="text" id="title" required>
-            </div>
-
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="startDateTime">Start Date & Time *</label>
-                <input type="datetime-local" id="startDateTime" required>
-            </div>
-
-            <div class="form-group">
-                <label for="endDateTime">End Date & Time *</label>
-                <input type="datetime-local" id="endDateTime" required>
-            </div>
-
-            <div class="form-group">
-                <label for="location">Location</label>
-                <input type="text" id="location">
-            </div>
-
-            <div class="reminder-section">
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="reminderEnabled">
-                        Enable Reminder
-                    </label>
-                </div>
-                <div class="form-group" id="reminderOptions" style="display: none;">
-                    <label for="reminderTime">Remind me:</label>
-                    <select id="reminderTime">
-                        <option value="5">5 minutes before</option>
-                        <option value="15">15 minutes before</option>
-                        <option value="30">30 minutes before</option>
-                        <option value="60">1 hour before</option>
-                        <option value="1440">1 day before</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="buttons">
-                <button type="button" class="clear-btn" onclick="clearForm()">Clear</button>
-                <button type="submit" class="save-btn">Save Schedule</button>
-            </div>
-        </form>
-
-        <div id="schedulesList"></div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+from flask import Flask, jsonify
+from flask_cors import CORS
+import os
+from google.cloud.sql.connector import Connector, IPTypes
+import pg8000
+import sqlalchemy
+import pandas as pd
+app = Flask(__name__)
+CORS(app)  # Enable CORS to allow requests from your frontend
+# Database connection setup
+def connect_to_db():
+    instance_connection_name = "cloud-computing-439018:us-central1:prod2"
+    db_user = "user"
+    db_pass = "user"
+    db_name = "postgres"
+    ip_type = IPTypes.PRIVATE if os.getenv("PRIVATE_IP") else IPTypes.PUBLIC
+    connector = Connector()
+    def getconn() -> pg8000.dbapi.Connection:
+        conn: pg8000.dbapi.Connection = connector.connect(
+            instance_connection_name,
+            "pg8000",
+            user=db_user,
+            password=db_pass,
+            db=db_name,
+            ip_type=ip_type,
+        )
+        return conn
+    pool = sqlalchemy.create_engine(
+        "postgresql+pg8000://",
+        creator=getconn,
+    )
+    return pool
+# Endpoint to retrieve existing users
+@app.route('/users', methods=['GET'])
+def get_users():
+    db = connect_to_db()
+    try:
+        with db.connect() as conn:
+            query = sqlalchemy.text("SELECT * FROM users;")
+            result = conn.execute(query)
+            users = [dict(row) for row in result]
+            print(users)
+            return jsonify(users), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5001)
