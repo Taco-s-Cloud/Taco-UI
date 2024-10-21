@@ -28,11 +28,11 @@ document.getElementById('scheduleForm').addEventListener('submit', function(e) {
     }
 
     const schedule = {
-        id: Date.now(),
+        user_id: parseInt(document.getElementById('userId').value, 10), // User ID as integer
         title: document.getElementById('title').value,
         description: document.getElementById('description').value,
-        startDateTime: document.getElementById('startDateTime').value,
-        endDateTime: document.getElementById('endDateTime').value,
+        start_time: document.getElementById('startDateTime').value,
+        end_time: document.getElementById('endDateTime').value,
         location: document.getElementById('location').value,
         reminder: document.getElementById('reminderEnabled').checked ? 
             document.getElementById('reminderTime').value : null
@@ -40,15 +40,9 @@ document.getElementById('scheduleForm').addEventListener('submit', function(e) {
 
     saveSchedule(schedule);
     clearForm();
-    loadSchedules();
 });
 
-function saveSchedule(schedule) {
-    const schedules = getSchedules();
-    schedules.push(schedule);
-    localStorage.setItem('schedules', JSON.stringify(schedules));
-}
-
+// Clear local storage (optional)
 function getSchedules() {
     return JSON.parse(localStorage.getItem('schedules') || '[]');
 }
@@ -59,34 +53,6 @@ function deleteSchedule(id) {
     loadSchedules();
 }
 
-function loadSchedules() {
-    const schedulesList = document.getElementById('schedulesList');
-    const schedules = getSchedules();
-    
-    schedulesList.innerHTML = '<h2>Saved Schedules</h2>';
-    
-    schedules.sort((a, b) => new Date(a.startDateTime) - new Date(b.startDateTime))
-            .forEach(schedule => {
-        const card = document.createElement('div');
-        card.className = 'schedule-card';
-        
-        const reminderText = schedule.reminder ? 
-            `Reminder: ${schedule.reminder} minutes before` : 'No reminder set';
-
-        card.innerHTML = `
-            <button class="delete-btn" onclick="deleteSchedule(${schedule.id})">Delete</button>
-            <h3>${schedule.title}</h3>
-            <p><strong>Description:</strong> ${schedule.description || 'N/A'}</p>
-            <p><strong>Start:</strong> ${formatDateTime(schedule.startDateTime)}</p>
-            <p><strong>End:</strong> ${formatDateTime(schedule.endDateTime)}</p>
-            <p><strong>Location:</strong> ${schedule.location || 'N/A'}</p>
-            <p><strong>${reminderText}</strong></p>
-        `;
-        
-        schedulesList.appendChild(card);
-    });
-}
-
 function formatDateTime(dateTimeStr) {
     return new Date(dateTimeStr).toLocaleString();
 }
@@ -94,4 +60,50 @@ function formatDateTime(dateTimeStr) {
 function clearForm() {
     document.getElementById('scheduleForm').reset();
     document.getElementById('reminderOptions').style.display = 'none';
+}
+
+async function saveSchedule(schedule) {
+    try {
+        const response = await fetch('http://localhost:5001/events', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(schedule),
+        });
+        if (!response.ok) {
+            alert('Failed to save schedule: ' + response.statusText); // User feedback
+            throw new Error('Failed to save schedule');
+        }
+        loadSchedules(); // Load schedules after saving
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function loadSchedules() {
+    try {
+        const response = await fetch('http://localhost:5001/events');
+        const schedules = await response.json();
+        
+        const schedulesList = document.getElementById('schedulesList');
+        schedulesList.innerHTML = ''; // Clear previous list
+
+        schedules.forEach(schedule => {
+            const card = document.createElement('div');
+            card.className = 'schedule-card'; // Add a class for styling
+            card.innerHTML = `
+                <h3>${schedule.title}</h3>
+                <p><strong>Description:</strong> ${schedule.description || 'N/A'}</p>
+                <p><strong>Start:</strong> ${schedule.start_time}</p>
+                <p><strong>End:</strong> ${schedule.end_time}</p>
+                <p><strong>Location:</strong> ${schedule.location || 'N/A'}</p>
+                <p><strong>Reminder:</strong> ${schedule.reminder ? schedule.reminder + ' minutes before' : 'No reminder'}</p>
+            `;
+            schedulesList.appendChild(card);
+        });
+    } catch (error) {
+        console.error(error);
+        alert('Failed to load schedules');
+    }
 }
