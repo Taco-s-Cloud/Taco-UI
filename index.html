@@ -3,50 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User List</title>
+    <title>Schedule Builder</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Existing Users</h1>
-        <button id="fetchUsersButton">Show Users</button>
-        <div id="usersList"></div>
+        <h1>Schedule Builder</h1>
+        <form id="scheduleForm">
+            <div class="form-group">
+                <label for="userId">User ID *</label>
+                <input type="text" id="userId" required> <!-- User ID Field -->
+            </div>
+
+            <div class="form-group">
+                <label for="title">Title *</label>
+                <input type="text" id="title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="startDateTime">Start Date & Time *</label>
+                <input type="datetime-local" id="startDateTime" required>
+            </div>
+
+            <div class="form-group">
+                <label for="endDateTime">End Date & Time *</label>
+                <input type="datetime-local" id="endDateTime" required>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location">
+            </div>
+
+            <div class="reminder-section">
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="reminderEnabled">
+                        Enable Reminder
+                    </label>
+                </div>
+                <div class="form-group" id="reminderOptions" style="display: none;">
+                    <label for="reminderTime">Remind me:</label>
+                    <select id="reminderTime">
+                        <option value="5">5 minutes before</option>
+                        <option value="15">15 minutes before</option>
+                        <option value="30">30 minutes before</option>
+                        <option value="60">1 hour before</option>
+                        <option value="1440">1 day before</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button type="button" class="clear-btn" onclick="clearForm()">Clear</button>
+                <button type="submit" class="save-btn">Save Schedule</button>
+            </div>
+        </form>
+
+        <div id="schedulesList"></div>
     </div>
 
-    <script>
-        async function fetchUsers() {
-            try {
-                const response = await fetch('http://localhost:5001/users');
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                const users = await response.json();
-
-                const usersList = document.getElementById('usersList');
-                usersList.innerHTML = ''; // Clear any existing content
-
-                // Loop through the users and create HTML elements to display them
-                users.forEach(user => {
-                    const userDiv = document.createElement('div');
-                    userDiv.classList.add('user-item');
-                    userDiv.innerHTML = `
-                        <p><strong>User ID:</strong> ${user.user_id}</p>
-                        <p><strong>Email:</strong> ${user.email}</p>
-                        <p><strong>Password:</strong> ${user.password}</p>
-                        <p><strong>Full Name:</strong> ${user.full_name}</p>
-                        <p><strong>Registration Date:</strong> ${new Date(user.registration_date).toLocaleDateString()}</p>
-                    `;
-                    usersList.appendChild(userDiv);
-                });
-            } catch (error) {
-                console.error('Error fetching users:', error);
-            }
-        }
-
-        // Add event listener to the button
-        document.getElementById('fetchUsersButton').addEventListener('click', fetchUsers);
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
