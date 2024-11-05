@@ -1,3 +1,4 @@
+/* General Styles */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,34 +7,41 @@
 }
 
 body {
-    background-color: #f5f5f5;
-    padding: 20px;
+    background-color: #f4f6f9;
+    padding: 40px;
+    color: #333;
 }
 
+/* Main container */
 .container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
+/* Header */
 h1 {
     text-align: center;
     color: #333;
-    margin-bottom: 30px;
+    font-size: 2.2em;
+    margin-bottom: 40px;
+    font-weight: 600;
 }
 
+/* Form Group */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     color: #555;
     font-weight: bold;
+    font-size: 1.1em;
 }
 
 input[type="text"],
@@ -41,71 +49,136 @@ input[type="datetime-local"],
 textarea,
 select {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
     font-size: 16px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="datetime-local"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #66bb6a; /* Subtle green border on focus */
 }
 
 textarea {
-    height: 100px;
+    height: 120px;
     resize: vertical;
 }
 
+/* Reminder Section */
 .reminder-section {
-    border: 1px solid #ddd;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    background-color: #f9f9f9;
 }
 
+/* Buttons */
 .buttons {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     justify-content: flex-end;
 }
 
 button {
-    padding: 10px 20px;
+    padding: 12px 24px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 8px;
     font-size: 16px;
-    transition: background-color 0.3s;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
 }
 
 .save-btn {
     background-color: #4CAF50;
     color: white;
+    font-weight: bold;
 }
 
 .clear-btn {
     background-color: #f44336;
     color: white;
+    font-weight: bold;
 }
 
 button:hover {
-    opacity: 0.9;
+    opacity: 0.85;
 }
 
+/* Calendar Styles */
+.rbc-calendar {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.rbc-time-view {
+    min-width: 850px;
+}
+
+/* Schedule List */
 #schedulesList {
-    margin-top: 30px;
+    margin-top: 40px;
 }
 
 .schedule-card {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 15px;
+    background-color: #fefefe;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .schedule-card h3 {
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    font-weight: 600;
 }
 
 .schedule-card p {
-    margin: 5px 0;
+    margin: 8px 0;
     color: #666;
+    line-height: 1.5;
+}
+
+/* Navigation Bar */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: #f0f0f0;
+}
+
+/* For ToDo App Logo */
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo img {
+    max-width: 180px;
+    height: auto;
 }
