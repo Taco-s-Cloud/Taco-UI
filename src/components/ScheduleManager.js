@@ -18,7 +18,7 @@ const ScheduleManager = ({ schedules }) => {
       <nav>
         <ul>
           <li><Link to="/schedule-manager">View Calendar</Link></li>
-          <li><Link to="/add-task">Add Task</Link></li>
+          <li><Link to="/add-schedule"> Add Schedule Event</Link></li>
         </ul>
       </nav>
 

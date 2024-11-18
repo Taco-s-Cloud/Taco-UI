@@ -37,7 +37,7 @@ function App() {
           <Route path="/" element={<UserProfile />} />
           {/* Redirect to calendar after login */}
           <Route path="/schedule-manager" element={<ScheduleManager schedules={schedules} />} />
-          <Route path="/add-task" element={<ScheduleForm loadSchedules={loadSchedules} />} />
+          <Route path="/add-schedule" element={<ScheduleForm loadSchedules={loadSchedules} />} />
         </Routes>
       </div>
     </Router>
