@@ -5,7 +5,7 @@ import ScheduleList from './ScheduleList';
 import UserProfile from './UserProfile';
 import ScheduleManager from './ScheduleManager';
 
-function App() {
+function App(){
   const [schedules, setSchedules] = useState([]);
   const [loading, setLoading] = useState(true);
 
