@@ -11,7 +11,7 @@ function App() {
 
   const loadSchedules = async () => {
     try {
-      const response = await fetch('http://https://schedule-manager-gcp-1024364663505.us-central1.run.app:8080/schedules');
+      const response = await fetch('https://schedule-manager-gcp-1024364663505.us-central1.run.app:8080/schedules');
       if (!response.ok) {
         throw new Error(`Error: ${response.status} - ${response.statusText}`);
       }
