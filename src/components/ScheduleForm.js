@@ -25,7 +25,7 @@ function ScheduleForm({ loadSchedules }) {
     e.preventDefault();
     const { reminderEnabled, ...data } = formData;
     try {
-      await fetch('https://schedule-manager-gcp-1024364663505.us-central1.run.app/schedules', {
+      await fetch('https://schedule-manager-1024364663505.us-central1.run.app/schedules', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
