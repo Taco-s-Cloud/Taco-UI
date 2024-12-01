@@ -12,25 +12,7 @@ function ScheduleForm({ loadSchedules }) {
     reminder: null,
     reminderEnabled: false
   });
-  const getIdentityToken = async () => {
-    const targetAudience = 'https://schedule-manager-1024364663505.us-central1.run.app';
 
-    // Fetch the token from the metadata server
-    const response = await fetch(
-      `http://metadata/computeMetadata/v1/instance/service-accounts/default/identity?audience=${targetAudience}`,
-      {
-        headers: {
-          'Metadata-Flavor': 'Google',
-        },
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch Identity Token');
-    }
-
-    return await response.text();
-  };
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -38,32 +20,17 @@ function ScheduleForm({ loadSchedules }) {
       [name]: type === 'checkbox' ? checked : value
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { reminderEnabled, ...data } = formData;
-  
     try {
-      // Fetch the Identity Token
-      const idToken = await getIdentityToken();
-  
-      // Make the POST request with the Identity Token
-      const response = await fetch('https://schedule-manager-1024364663505.us-central1.run.app/schedules', {
+      await fetch('https://schedule-manager-1024364663505.us-central1.run.app/schedules', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${idToken}`,
-        },
-        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
       });
-  
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status} - ${response.statusText}`);
-      }
-  
-      // Reload schedules after successfully saving
       loadSchedules();
-  
-      // Reset form data
       setFormData({
         user_id: '',
         title: '',
@@ -72,38 +39,12 @@ function ScheduleForm({ loadSchedules }) {
         end_time: '',
         location: '',
         reminder: null,
-        reminderEnabled: false,
+        reminderEnabled: false
       });
     } catch (error) {
       console.error('Failed to save schedule:', error);
-      alert('Error saving schedule. Check the console for details.');
     }
   };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const { reminderEnabled, ...data } = formData;
-  //   try {
-  //     await fetch('https://schedule-manager-1024364663505.us-central1.run.app/schedules', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify(data)
-  //     });
-  //     loadSchedules();
-  //     setFormData({
-  //       user_id: '',
-  //       title: '',
-  //       description: '',
-  //       start_time: '',
-  //       end_time: '',
-  //       location: '',
-  //       reminder: null,
-  //       reminderEnabled: false
-  //     });
-  //   } catch (error) {
-  //     console.error('Failed to save schedule:', error);
-  //   }
-  // };
 
   return (
     <div className="container">
