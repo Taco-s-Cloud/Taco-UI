@@ -12,7 +12,25 @@ function ScheduleForm({ loadSchedules }) {
     reminder: null,
     reminderEnabled: false
   });
+  const getIdentityToken = async () => {
+    const targetAudience = 'https://schedule-manager-1024364663505.us-central1.run.app';
 
+    // Fetch the token from the metadata server
+    const response = await fetch(
+      `http://metadata/computeMetadata/v1/instance/service-accounts/default/identity?audience=${targetAudience}`,
+      {
+        headers: {
+          'Metadata-Flavor': 'Google',
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch Identity Token');
+    }
+
+    return await response.text();
+  };
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
