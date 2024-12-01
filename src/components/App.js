@@ -8,10 +8,40 @@ import ScheduleManager from './ScheduleManager';
 function App(){
   const [schedules, setSchedules] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  const getIdentityToken = async () => {
+    const targetAudience = 'https://schedule-manager-1024364663505.us-central1.run.app';
+
+    // Fetch the token from the metadata server
+    const response = await fetch(
+      `http://metadata/computeMetadata/v1/instance/service-accounts/default/identity?audience=${targetAudience}`,
+      {
+        headers: {
+          'Metadata-Flavor': 'Google',
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch Identity Token');
+    }
+
+    return await response.text();
+  };
 
   const loadSchedules = async () => {
     try {
-      const response = await fetch('https://schedule-manager-1024364663505.us-central1.run.app/schedules');
+      const idToken = await getIdentityToken();
+
+      // Make the request to the backend
+      const response = await fetch('https://schedule-manager-1024364663505.us-central1.run.app/schedules', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      //const response = await fetch('https://schedule-manager-1024364663505.us-central1.run.app/schedules');
       if (!response.ok) {
         throw new Error(`Error: ${response.status} - ${response.statusText}`);
       }
