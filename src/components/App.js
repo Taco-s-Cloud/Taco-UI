@@ -11,7 +11,6 @@ function App(){
   
   const loadSchedules = async () => {
     try {
-      const idToken = await getIdentityToken();
       const response = await fetch('https://schedule-manager-1024364663505.us-central1.run.app/schedules');
       if (!response.ok) {
         throw new Error(`Error: ${response.status} - ${response.statusText}`);
