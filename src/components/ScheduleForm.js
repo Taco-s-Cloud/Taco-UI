@@ -20,17 +20,32 @@ function ScheduleForm({ loadSchedules }) {
       [name]: type === 'checkbox' ? checked : value
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { reminderEnabled, ...data } = formData;
+  
     try {
-      await fetch('https://schedule-manager-1024364663505.us-central1.run.app/schedules', {
+      // Fetch the Identity Token
+      const idToken = await getIdentityToken();
+  
+      // Make the POST request with the Identity Token
+      const response = await fetch('https://schedule-manager-1024364663505.us-central1.run.app/schedules', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify(data),
       });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      }
+  
+      // Reload schedules after successfully saving
       loadSchedules();
+  
+      // Reset form data
       setFormData({
         user_id: '',
         title: '',
@@ -39,12 +54,38 @@ function ScheduleForm({ loadSchedules }) {
         end_time: '',
         location: '',
         reminder: null,
-        reminderEnabled: false
+        reminderEnabled: false,
       });
     } catch (error) {
       console.error('Failed to save schedule:', error);
+      alert('Error saving schedule. Check the console for details.');
     }
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const { reminderEnabled, ...data } = formData;
+  //   try {
+  //     await fetch('https://schedule-manager-1024364663505.us-central1.run.app/schedules', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(data)
+  //     });
+  //     loadSchedules();
+  //     setFormData({
+  //       user_id: '',
+  //       title: '',
+  //       description: '',
+  //       start_time: '',
+  //       end_time: '',
+  //       location: '',
+  //       reminder: null,
+  //       reminderEnabled: false
+  //     });
+  //   } catch (error) {
+  //     console.error('Failed to save schedule:', error);
+  //   }
+  // };
 
   return (
     <div className="container">
