@@ -4,6 +4,7 @@ import ScheduleForm from './ScheduleForm';
 import ScheduleList from './ScheduleList';
 import UserProfile from './UserProfile';
 import ScheduleManager from './ScheduleManager';
+import TaskForm from "./TaskForm";
 
 function App() {
   const [schedules, setSchedules] = useState([]);
@@ -38,6 +39,7 @@ function App() {
           {/* Redirect to calendar after login */}
           <Route path="/schedule-manager" element={<ScheduleManager schedules={schedules} />} />
           <Route path="/add-schedule" element={<ScheduleForm loadSchedules={loadSchedules} />} />
+          <Route path="/add-task" element={<TaskForm />} />
         </Routes>
       </div>
     </Router>

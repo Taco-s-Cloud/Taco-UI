@@ -53,6 +53,7 @@ function ScheduleForm({ loadSchedules }) {
         <ul>
           <li><Link to="/schedule-manager">View Calendar</Link></li>
           <li><Link to="/add-schedule">Add Schedule Event</Link></li>
+          <li><Link to="/add-task">Add Task</Link></li>
         </ul>
       </nav>
 
