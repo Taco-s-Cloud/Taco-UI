@@ -22,7 +22,7 @@ const UserProfile = () => {
     e.preventDefault();
 
     if (isLogin) {
-      try {
+      // try {
       //   const response = await fetch('https://user-profile-1024364663505.us-central1.run.app/api/login', {
       //     method: 'POST',
       //     headers: { 'Content-Type': 'application/json' },
