@@ -18,37 +18,37 @@ const UserProfile = () => {
     setIsLogin(!isLogin);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (isLogin) {
-      // try {
-      //   const response = await fetch('https://user-profile-1024364663505.us-central1.run.app/api/login', {
-      //     method: 'POST',
-      //     headers: { 'Content-Type': 'application/json' },
-      //     body: JSON.stringify({ email, password }),
-      //   });
+      try {
+        const response = await fetch('https://user-profile-1024364663505.us-central1.run.app/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
 
-      //   if (response.ok) {
-      //     const result = await response.json();
-      //     console.log('Login successful:', result);
-      //     alert(result.message);
-      //     navigate('/schedule-manager'); // Redirect after login
-      //   } else {
-      //     const errorData = await response.json();
-      //     setErrorMessage(errorData.error || 'Invalid credentials');
-      //   }
-      // } catch (error) {
-      //   console.error('Error during login:', error);
-      //   setErrorMessage('An error occurred during login. Please try again.');
-      // }
-      // Simulate sign-in (no backend)
-      if (storedUser && email === storedUser.email && password === storedUser.password) {
-        alert('Sign-in successful!');
-        navigate('/schedule-manager');
-      } else {
-        alert('Invalid credentials');
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Login successful:', result);
+          alert(result.message);
+          navigate('/schedule-manager'); // Redirect after login
+        } else {
+          const errorData = await response.json();
+          setErrorMessage(errorData.error || 'Invalid credentials');
+        }
+      } catch (error) {
+        console.error('Error during login:', error);
+        setErrorMessage('An error occurred during login. Please try again.');
       }
+      // Simulate sign-in (no backend)
+      // if (storedUser && email === storedUser.email && password === storedUser.password) {
+      //   alert('Sign-in successful!');
+      //   navigate('/schedule-manager');
+      // } else {
+      //   alert('Invalid credentials');
+      // }
     } else {
       if (password !== confirmPassword) {
         alert('Passwords do not match');
