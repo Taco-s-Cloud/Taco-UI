@@ -10,14 +10,19 @@ const UserProfile = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null); // Added state for error messages
 
   const navigate = useNavigate();
   const [storedUser, setStoredUser] = useState(null);
 
+  // const handleSwitch = () => {
+  //   setIsLogin(!isLogin);
+  // };
   const handleSwitch = () => {
     setIsLogin(!isLogin);
+    setErrorMessage(null); // Clear error messages when switching modes
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
