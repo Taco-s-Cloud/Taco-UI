@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from './firebase';
+import { auth } from '../middleware/firebase';
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
 } from 'firebase/auth';
-import Logo from '../images/logo.png'; // Adjust this path based on your project structure
+import Logo from '../images/logo.png'; // Adjust
 
 const UserProfile = () => {
   const [isLogin, setIsLogin] = useState(true);
