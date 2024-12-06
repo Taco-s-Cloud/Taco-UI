@@ -19,7 +19,7 @@ const TaskForm = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:5003/tasks', {
+      const response = await fetch('https://task-manager-1024364663505.us-central1.run.app/tasks', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
