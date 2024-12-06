@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, useNavigate, Link } from 'react-router-dom';
-import ScheduleForm from './ScheduleForm';
-import ScheduleList from './ScheduleList';
-import UserProfile from './UserProfile';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import UserProfile from './UserProfile'; // Import the UserProfile page
+import WelcomePage from './WelcomePage';
 import ScheduleManager from './ScheduleManager';
-import TaskForm from "./TaskForm";
+import ScheduleForm from './ScheduleForm';
+import TaskForm from './TaskForm';
+import ToDoList from './ToDoList';
 
 function App() {
   const [schedules, setSchedules] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const loadSchedules = async () => {
     try {
@@ -20,9 +20,6 @@ function App() {
       setSchedules(data);
     } catch (error) {
       console.error('Failed to load schedules:', error);
-      alert('Error loading schedules. Check the console for details.');
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -32,16 +29,19 @@ function App() {
 
   return (
     <Router>
-      <div className="container">
-        <Routes>
-          {/* Set UserProfile as the home page */}
-          <Route path="/" element={<UserProfile />} />
-          {/* Redirect to calendar after login */}
-          <Route path="/schedule-manager" element={<ScheduleManager schedules={schedules} />} />
-          <Route path="/add-schedule" element={<ScheduleForm loadSchedules={loadSchedules} />} />
-          <Route path="/add-task" element={<TaskForm />} />
-        </Routes>
-      </div>
+      <Routes>
+        {/* Set UserProfile as the login page */}
+        <Route path="/" element={<UserProfile />} />
+
+        {/* Redirect to WelcomePage after login */}
+        <Route path="/welcome" element={<WelcomePage />} />
+
+        {/* Other routes */}
+        <Route path="/schedule-manager" element={<ScheduleManager schedules={schedules} />} />
+        <Route path="/add-schedule" element={<ScheduleForm loadSchedules={loadSchedules} />} />
+        <Route path="/add-task" element={<TaskForm />} />
+        <Route path="/to-do-list" element={<ToDoList />} />
+      </Routes>
     </Router>
   );
 }

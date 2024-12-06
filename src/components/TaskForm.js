@@ -5,7 +5,6 @@ const TaskForm = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
-  const [completed, setCompleted] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -14,12 +13,11 @@ const TaskForm = () => {
     const formData = {
       title,
       description,
-      completed,
       due_date: new Date(dueDate).toISOString(),
     };
 
     try {
-      const response = await fetch('http://localhost:5003/tasks', {
+      const response = await fetch('http://localhost:5001/tasks', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,14 +65,6 @@ const TaskForm = () => {
             value={dueDate}
             onChange={(e) => setDueDate(e.target.value)}
             required
-          />
-        </div>
-        <div>
-          <label>Completed</label>
-          <input
-            type="checkbox"
-            checked={completed}
-            onChange={(e) => setCompleted(e.target.checked)}
           />
         </div>
         <button type="submit">Save Task</button>

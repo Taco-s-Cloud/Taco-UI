@@ -54,10 +54,11 @@ function ScheduleForm({ loadSchedules }) {
           <li><Link to="/schedule-manager">View Calendar</Link></li>
           <li><Link to="/add-schedule">Add Schedule Event</Link></li>
           <li><Link to="/add-task">Add Task</Link></li>
+          <li><Link to="/to-do-list">To Do List</Link></li>
         </ul>
       </nav>
 
-      <h1>Add a Task</h1>
+      <h1>Add an Event</h1>
       <form onSubmit={handleSubmit} className="form-group" id="scheduleForm">
         <div className="form-group">
           <label>User ID *</label>
