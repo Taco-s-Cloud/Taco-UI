@@ -5,6 +5,7 @@ import ScheduleList from './ScheduleList';
 import UserProfile from './UserProfile';
 import ScheduleManager from './ScheduleManager';
 import { makeApiCall } from '../middleware/apiHelper'; 
+import TaskForm from "./TaskForm";
 
 function App(){
   const [schedules, setSchedules] = useState([]);
