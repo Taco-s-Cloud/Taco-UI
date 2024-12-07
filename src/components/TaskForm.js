@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import '../styles/CommonStyles.css'; // Shared styles
 
 const TaskForm = () => {
   const [title, setTitle] = useState('');
@@ -9,7 +10,6 @@ const TaskForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = {
       title,
       description,
@@ -17,55 +17,48 @@ const TaskForm = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:5001/tasks', {
+      await fetch('http://localhost:5001/tasks', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-
-      if (response.ok) {
-        alert('Task added successfully!');
-        navigate('/tasks'); // Redirect to tasks list
-      } else {
-        const errorData = await response.json();
-        alert(`Failed to add task: ${errorData.error || 'Unknown error'}`);
-      }
+      alert('Task added successfully!');
+      navigate('/welcome');
     } catch (error) {
       console.error('Error adding task:', error);
-      alert('An error occurred while adding the task.');
+      alert('Failed to add task.');
     }
   };
 
   return (
-    <div className="container">
+    <div className="page-container">
+      {/* Navigation Bar */}
+      <nav className="nav-bar">
+        <button className="back-button" onClick={() => navigate('/welcome')}>
+          &larr; Back
+        </button>
+        <ul className="nav-links">
+          <li><Link to="/schedule-manager">View Calendar</Link></li>
+          <li><Link to="/add-schedule">Add Schedule Event</Link></li>
+          <li><Link to="/add-task">Add Task</Link></li>
+          <li><Link to="/to-do-list">To Do List</Link></li>
+        </ul>
+      </nav>
+
+      {/* Task Form */}
       <h1>Add a Task</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="form-group">
         <div>
           <label>Title *</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
+          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
         </div>
         <div>
           <label>Description</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
+          <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
         </div>
         <div>
-          <label>Due Date</label>
-          <input
-            type="datetime-local"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            required
-          />
+          <label>Due Date *</label>
+          <input type="datetime-local" value={dueDate} onChange={(e) => setDueDate(e.target.value)} required />
         </div>
         <button type="submit">Save Task</button>
       </form>
