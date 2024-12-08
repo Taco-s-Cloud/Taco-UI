@@ -1,0 +1,82 @@
+/* General container styles */
+.welcome-container {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    background: linear-gradient(135deg, #f4f4f9, #e6ecf0);
+    color: #333;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Header styles */
+  .welcome-header {
+    margin-bottom: 40px;
+  }
+  
+  .welcome-header .logo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+  }
+  
+  .welcome-header .app-name {
+    color: #333;
+  }
+  
+  .welcome-header h1 {
+    font-size: 2.5rem;
+    margin: 10px 0;
+    color: #333;
+  }
+  
+  .welcome-header p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  /* Navigation styles */
+  .welcome-nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .welcome-nav li {
+    margin: 10px;
+  }
+  
+  .welcome-nav .nav-link {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007bff;
+    background: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .welcome-nav .nav-link:hover {
+    background: #007bff;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Footer styles */
+  .welcome-footer {
+    margin-top: 40px;
+    font-size: 0.9rem;
+    color: #777;
+  }
+  

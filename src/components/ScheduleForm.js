@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom for navigation
 import { makeApiCall } from '../middleware/apiHelper'; 
+import '../styles/CommonStyles.css'; // Shared styles
 
 function ScheduleForm({ loadSchedules }) {
   const [formData, setFormData] = useState({

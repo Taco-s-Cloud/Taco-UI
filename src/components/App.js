@@ -6,6 +6,9 @@ import UserProfile from './UserProfile';
 import ScheduleManager from './ScheduleManager';
 import { makeApiCall } from '../middleware/apiHelper'; 
 import TaskForm from "./TaskForm";
+import ToDoList from './ToDoList';
+import WelcomePage from './WelcomePage';
+
 
 function App(){
   const [schedules, setSchedules] = useState([]);
@@ -30,16 +33,14 @@ function App(){
 
   return (
     <Router>
-      <div className="container">
-        <Routes>
-          {/* Set UserProfile as the home page */}
-          <Route path="/" element={<UserProfile />} />
-          {/* Redirect to calendar after login */}
-          <Route path="/schedule-manager" element={<ScheduleManager schedules={schedules} />} />
-          <Route path="/add-schedule" element={<ScheduleForm loadSchedules={loadSchedules} />} />
-          <Route path="/add-task" element={<TaskForm />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<UserProfile />} />
+        <Route path="/welcome" element={<WelcomePage />} />
+        <Route path="/schedule-manager" element={<ScheduleManager schedules={schedules} />} />
+        <Route path="/add-schedule" element={<ScheduleForm loadSchedules={loadSchedules} />} />
+        <Route path="/add-task" element={<TaskForm />} />
+        <Route path="/to-do-list" element={<ToDoList />} />
+      </Routes>
     </Router>
   );
 }

@@ -32,7 +32,7 @@ const UserProfile = () => {
         // Login user
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         console.log('User logged in:', userCredential.user);
-        navigate('/schedule-manager');
+        navigate('/welcome');
       } else {
         if (password !== confirmPassword) {
           alert('Passwords do not match!');
@@ -41,7 +41,7 @@ const UserProfile = () => {
         // Register user
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         console.log('User registered:', userCredential.user);
-        navigate('/schedule-manager');
+        navigate('/welcome');
       }
     } catch (error) {
       alert(error.message);
@@ -53,7 +53,7 @@ const UserProfile = () => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       console.log('Google Sign-In successful:', user);
-      navigate('/schedule-manager'); // Redirect after successful Google Sign-In
+      navigate('/welcome'); // Redirect after successful Google Sign-In
     } catch (error) {
       alert(`Google Sign-In failed: ${error.message}`);
     }
