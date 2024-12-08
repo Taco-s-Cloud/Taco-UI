@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom for navigation
+import { makeApiCall } from '../middleware/apiHelper'; 
 
 function ScheduleForm({ loadSchedules }) {
   const [formData, setFormData] = useState({
@@ -23,26 +24,22 @@ function ScheduleForm({ loadSchedules }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { reminderEnabled, ...data } = formData;
+    const { reminderEnabled, ...data } = formData; // Exclude reminderEnabled as it's a UI-only field
     try {
-      await fetch('https://schedule-manager-1024364663505.us-central1.run.app/schedules', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      loadSchedules();
+      await makeApiCall('https://schedule-manager2-1024364663505.us-central1.run.app/schedules', 'POST', data); // Use the API helper for the request
+      loadSchedules(); // Refresh the schedules list
       setFormData({
-        user_id: '',
         title: '',
         description: '',
         start_time: '',
         end_time: '',
         location: '',
         reminder: null,
-        reminderEnabled: false
-      });
+        reminderEnabled: false,
+      }); // Reset the form
     } catch (error) {
       console.error('Failed to save schedule:', error);
+      alert('Error saving schedule. Check the console for details.');
     }
   };
 
@@ -53,6 +50,7 @@ function ScheduleForm({ loadSchedules }) {
         <ul>
           <li><Link to="/schedule-manager">View Calendar</Link></li>
           <li><Link to="/add-schedule">Add Schedule Event</Link></li>
+          <li><Link to="/add-task">Add Task</Link></li>
         </ul>
       </nav>
 

@@ -4,6 +4,8 @@ import ScheduleForm from './ScheduleForm';
 import ScheduleList from './ScheduleList';
 import UserProfile from './UserProfile';
 import ScheduleManager from './ScheduleManager';
+import { makeApiCall } from '../middleware/apiHelper'; 
+import TaskForm from "./TaskForm";
 
 function App(){
   const [schedules, setSchedules] = useState([]);
@@ -11,17 +13,13 @@ function App(){
   
   const loadSchedules = async () => {
     try {
-      const response = await fetch('https://schedule-manager-1024364663505.us-central1.run.app/schedules');
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status} - ${response.statusText}`);
-      }
-      const data = await response.json();
-      setSchedules(data);
+      const data = await makeApiCall('https://schedule-manager2-1024364663505.us-central1.run.app/schedules', 'GET'); // Call the API using the helper
+      setSchedules(data); // Update the schedules state with the response data
     } catch (error) {
       console.error('Failed to load schedules:', error);
       alert('Error loading schedules. Check the console for details.');
     } finally {
-      setLoading(false);
+      setLoading(false); // Ensure loading state is updated
     }
   };
 
@@ -38,6 +36,7 @@ function App(){
           {/* Redirect to calendar after login */}
           <Route path="/schedule-manager" element={<ScheduleManager schedules={schedules} />} />
           <Route path="/add-schedule" element={<ScheduleForm loadSchedules={loadSchedules} />} />
+          <Route path="/add-task" element={<TaskForm />} />
         </Routes>
       </div>
     </Router>
