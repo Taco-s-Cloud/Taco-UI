@@ -27,6 +27,7 @@ function ScheduleForm({ loadSchedules }) {
     const { reminderEnabled, ...data } = formData; // Exclude reminderEnabled as it's a UI-only field
     try {
       await makeApiCall('https://schedule-manager-1024364663505.us-central1.run.app/schedules', 'POST', data); // Use the API helper for the request
+      //await makeApiCall('http://localhost:5002/schedules', 'POST', data);
       loadSchedules(); // Refresh the schedules list
       setFormData({
         title: '',
