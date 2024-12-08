@@ -13,7 +13,7 @@ function App(){
   
   const loadSchedules = async () => {
     try {
-      const data = await makeApiCall('https://schedule-manager2-1024364663505.us-central1.run.app/schedules', 'GET'); // Call the API using the helper
+      const data = await makeApiCall('https://schedule-manager-1024364663505.us-central1.run.app/schedules', 'GET'); // Call the API using the helper
       setSchedules(data); // Update the schedules state with the response data
     } catch (error) {
       console.error('Failed to load schedules:', error);
