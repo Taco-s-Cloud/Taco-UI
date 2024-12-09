@@ -17,7 +17,7 @@ const ScheduleManager = () => {
   // Function to load schedules
   const loadSchedules = async () => {
     try {
-      const data = await makeApiCall('http://localhost:5002/schedules', 'GET');
+      const data = await makeApiCall('https://schedule-manager-1024364663505.us-central1.run.app/schedules', 'GET');
       setSchedules(data);
     } catch (error) {
       console.error('Failed to load schedules:', error);
