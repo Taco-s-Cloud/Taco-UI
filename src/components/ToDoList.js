@@ -7,30 +7,14 @@ const ToDoList = () => {
   const [filter, setFilter] = useState('all'); // all, completed, pending
   const [keyword, setKeyword] = useState('');
 
-  // const fetchTasks = async () => {
-  //   try {
-  //     const params = new URLSearchParams();
-  //     if (filter !== 'all') params.append('completed', filter === 'completed');
-  //     if (keyword) params.append('keyword', keyword);
-
-  //     const response = await fetch(`http://localhost:5001/tasks?${params.toString()}`);
-  //     if (!response.ok) {
-  //       throw new Error(`API Error: ${response.status} - ${response.statusText}`);
-  //     }
-  //     const data = await response.json();
-  //     setTasks(data);
-  //   } catch (error) {
-  //     console.error('Error fetching tasks:', error);
-  //     alert('Failed to fetch tasks.');
-  //   }
-  // };
   const fetchTasks = async () => {
     try {
       const params = new URLSearchParams();
       if (filter !== 'all') params.append('completed', filter === 'completed');
       if (keyword) params.append('keyword', keyword);
       // Use makeApiCall for the API request
-      const data = await makeApiCall(`http://localhost:5001/tasks?${params.toString()}`);
+      //const data = await makeApiCall(`http://localhost:5001/tasks?${params.toString()}`);
+      const data = await makeApiCall(`https://task-manager-1024364663505.us-central1.run.app/tasks?${params.toString()}`);
       setTasks(data);
     } catch (error) {
       console.error('Error fetching tasks:', error);
@@ -38,30 +22,12 @@ const ToDoList = () => {
     }
   };
   
-  // const markAsCompleted = async (taskId) => {
-  //   try {
-  //     const response = await fetch(`http://localhost:5001/tasks/${taskId}`, {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ completed: true }),
-  //     });
-  //     if (!response.ok) {
-  //       throw new Error(`API Error: ${response.status} - ${response.statusText}`);
-  //     }
-  //     alert('Task marked as completed!');
-  //     fetchTasks();
-  //   } catch (error) {
-  //     console.error('Error marking task as completed:', error);
-  //     alert('Failed to mark task as completed.');
-  //   }
-  // };
   const markAsCompleted = async (taskId) => {
     try {
       // Use makeApiCall for the API request
-      await makeApiCall(`http://localhost:5001/tasks/${taskId}`, 'PUT', { completed: true });
-  
+      
+      //await makeApiCall(`http://localhost:5001/tasks/${taskId}`, 'PUT', { completed: true });
+      await makeApiCall(`https://task-manager-1024364663505.us-central1.run.app/tasks/${taskId}`, 'PUT', { completed: true });
       alert('Task marked as completed!');
       fetchTasks();
     } catch (error) {
