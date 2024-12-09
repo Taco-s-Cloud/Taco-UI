@@ -2,15 +2,36 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
+import { makeApiCall } from '../middleware/apiHelper';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const localizer = momentLocalizer(moment);
 
-const ScheduleManager = ({ schedules }) => {
+const ScheduleManager = () => {
   const navigate = useNavigate();
 
-  // State for calendar events
+  // State for schedules and calendar events
   const [events, setEvents] = useState([]);
+  const [schedules, setSchedules] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Function to load schedules
+  const loadSchedules = async () => {
+    try {
+      const data = await makeApiCall('http://localhost:5002/schedules', 'GET');
+      setSchedules(data);
+    } catch (error) {
+      console.error('Failed to load schedules:', error);
+      alert('Error loading schedules. Check the console for details.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Load schedules when the component mounts
+  useEffect(() => {
+    loadSchedules();
+  }, []);
 
   // Update events when schedules change
   useEffect(() => {
@@ -43,19 +64,23 @@ const ScheduleManager = ({ schedules }) => {
       {/* Page Title */}
       <h1 className="page-title">Schedule Manager</h1>
 
-      {/* Calendar Section */}
-      <div className="calendar-container">
-        <Calendar
-          localizer={localizer}
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: '600px', width: '100%', margin: 'auto' }}
-          views={['month', 'week', 'day']}
-          defaultView="week"
-          popup
-        />
-      </div>
+      {/* Loading State */}
+      {loading ? (
+        <p>Loading schedules...</p>
+      ) : (
+        <div className="calendar-container">
+          <Calendar
+            localizer={localizer}
+            events={events}
+            startAccessor="start"
+            endAccessor="end"
+            style={{ height: '600px', width: '100%', margin: 'auto' }}
+            views={['month', 'week', 'day']}
+            defaultView="week"
+            popup
+          />
+        </div>
+      )}
     </div>
   );
 };
