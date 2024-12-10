@@ -56,7 +56,7 @@ function ScheduleForm({ loadSchedules }) {
         </ul>
       </nav>
 
-      <h1>Add a Task</h1>
+      <h1>Add an Event</h1>
       <form onSubmit={handleSubmit} className="form-group" id="scheduleForm">
         <div className="form-group">
           <label>User ID *</label>
