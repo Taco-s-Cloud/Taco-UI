@@ -14,7 +14,7 @@ const ToDoList = () => {
       if (keyword) params.append('keyword', keyword);
       // Use makeApiCall for the API request
       //const data = await makeApiCall(`http://localhost:5001/tasks?${params.toString()}`);
-      const data = await makeApiCall(`https://task-manager-1024364663505.us-central1.run.app/tasks`, 'GET');
+      const data = await makeApiCall("https://task-manager-1024364663505.us-central1.run.app/tasks", "GET");
       setTasks(data);
     } catch (error) {
       console.error('Error fetching tasks:', error);
