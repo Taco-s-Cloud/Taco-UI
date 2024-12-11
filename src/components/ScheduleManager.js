@@ -95,6 +95,7 @@ const ScheduleManager = () => {
             views={['month', 'week', 'day']}
             defaultView="week"
             popup
+            onSelectEvent={handleEventClick} 
           />
         </div>
       )}
