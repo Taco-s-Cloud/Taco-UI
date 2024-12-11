@@ -27,6 +27,25 @@ const ScheduleManager = () => {
     }
   };
 
+  const deleteSchedule = async (scheduleId) => {
+    try {
+      await makeApiCall(`https://schedule-manager-1024364663505.us-central1.run.app/schedules/${scheduleId}`, 'DELETE');
+      alert('Schedule deleted successfully!');
+      // Reload schedules after deletion
+      loadSchedules();
+    } catch (error) {
+      console.error('Error deleting schedule:', error);
+      alert('Failed to delete schedule.');
+    }
+  };
+
+  const handleEventClick = (event) => {
+    const confirmDelete = window.confirm(`Are you sure you want to delete the event: ${event.title}?`);
+    if (confirmDelete) {
+      deleteSchedule(event.id);
+    }
+  };
+  
   // Load schedules when the component mounts
   useEffect(() => {
     loadSchedules();
