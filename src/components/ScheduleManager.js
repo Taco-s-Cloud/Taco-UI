@@ -53,14 +53,18 @@ const ScheduleManager = () => {
 
   // Update events when schedules change
   useEffect(() => {
-    if (schedules) {
+   if (schedules && schedules.length > 0) {
       const formattedEvents = schedules.map((schedule) => ({
+        id: schedule.id,
         title: schedule.title || 'Untitled Event',
         start: new Date(schedule.start_time),
         end: new Date(schedule.end_time),
         location: schedule.location || '',
       }));
       setEvents(formattedEvents);
+    } else {
+      // If no schedules, clear events
+      setEvents([]);
     }
   }, [schedules]);
   return (
