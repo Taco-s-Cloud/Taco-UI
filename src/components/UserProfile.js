@@ -7,7 +7,8 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from 'firebase/auth';
-import Logo from '../images/logo.png'; // Adjust
+import Logo from '../images/logo.png'; 
+import Google from '../images/Google.png';
 
 const UserProfile = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -150,7 +151,7 @@ const UserProfile = () => {
         }}
       >
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+          src={Google}
           alt="Google Logo"
           style={{ width: '20px', marginRight: '10px' }}
         />
