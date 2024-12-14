@@ -4,6 +4,8 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { makeApiCall } from '../middleware/apiHelper';
+import NavBar from './NavBar';
+import '../styles/CommonStyles.css'; // Shared styles
 
 const localizer = momentLocalizer(moment);
 
@@ -70,18 +72,7 @@ const ScheduleManager = () => {
   return (
     <div className="container">
       {/* Navigation Section */}
-      <nav className="nav-bar">
-        <button className="back-button" onClick={() => navigate('/welcome')}>
-          ← Back
-        </button>
-        <ul className="nav-links">
-          <li><Link to="/schedule-manager" className="nav-link">View Calendar</Link></li>
-          <li><Link to="/add-schedule" className="nav-link">Add Schedule Event</Link></li>
-          <li><Link to="/add-task" className="nav-link">Add Task</Link></li>
-          <li><Link to="/to-do-list" className="nav-link">To Do List</Link></li>
-        </ul>
-      </nav>
-
+      <NavBar />
       {/* Page Title */}
       <h1 className="page-title">Schedule Manager</h1>
 
