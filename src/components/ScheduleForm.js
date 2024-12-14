@@ -48,13 +48,7 @@ function ScheduleForm({ loadSchedules }) {
   return (
     <div className="container">
       {/* Add Navigation Bar */}
-      <nav>
-        <ul>
-          <li><Link to="/schedule-manager">View Calendar</Link></li>
-          <li><Link to="/add-schedule">Add Schedule Event</Link></li>
-          <li><Link to="/add-task">Add Task</Link></li>
-        </ul>
-      </nav>
+      <NavBar />
 
       <h1>Add an Event</h1>
       <form onSubmit={handleSubmit} className="form-group" id="scheduleForm">
