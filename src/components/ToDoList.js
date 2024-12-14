@@ -4,6 +4,7 @@ import { makeApiCall } from '../middleware/apiHelper';
 import NavBar from './NavBar';
 import '../styles/CommonStyles.css';
 
+
 const ToDoList = () => {
   const [tasks, setTasks] = useState([]); // Original tasks
   const [filteredTasks, setFilteredTasks] = useState([]); // Filtered tasks for display
