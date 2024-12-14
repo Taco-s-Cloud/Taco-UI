@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import { makeApiCall } from '../middleware/apiHelper';
 import '../styles/CommonStyles.css'; // Shared styles
+import NavBar from './NavBar';
 
 function TaskForm({ loadTasks }) {
   const navigate = useNavigate(); // Initialize navigate for navigation
@@ -44,18 +45,7 @@ function TaskForm({ loadTasks }) {
   return (
     <div className="page-container">
       {/* Navigation Bar */}
-      <nav className="nav-bar">
-        <button className="back-button" onClick={() => navigate('/welcome')}>
-          &larr; Back
-        </button>
-        <ul className="nav-links">
-          <li><Link to="/schedule-manager">View Calendar</Link></li>
-          <li><Link to="/add-schedule">Add Schedule Event</Link></li>
-          <li><Link to="/add-task">Add Task</Link></li>
-          <li><Link to="/to-do-list">To Do List</Link></li>
-        </ul>
-      </nav>
-
+      <NavBar />
       {/* Task Form */}
       <h1>Add a Task</h1>
       <form onSubmit={handleSubmit} className="form-group">
