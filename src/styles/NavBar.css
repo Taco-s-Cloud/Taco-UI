@@ -1,0 +1,53 @@
+/* Light Green Themed NavBar */
+.navbar {
+    background-color: #d4edda; /* Light green background */
+    color: #155724; /* Dark green text for contrast */
+    padding: 15px 40px; /* More padding for a spacious look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add depth */
+  }
+  
+  .nav-container {
+    display: flex;
+    justify-content: space-between; /* Spread content across the NavBar */
+    align-items: center;
+    max-width: 1200px; /* Set maximum width */
+    margin: 0 auto; /* Center the NavBar */
+  }
+
+  .nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 30px; /* Increase spacing between menu items */
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    color: #155724; /* Dark green for links */
+    font-weight: bold;
+    font-size: 18px; /* Slightly larger text */
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth hover effects */
+  }
+  
+  .nav-link:hover {
+    color: #0f5132; /* Darker green on hover */
+    transform: scale(1.1); /* Subtle zoom effect */
+  }
+  
+  .back-button {
+    background-color: #28a745; /* Bright green for the back button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .back-button:hover {
+    background-color: #218838; /* Darker green hover effect */
+    transform: scale(1.05); /* Slight zoom on hover */
+  }
+  
